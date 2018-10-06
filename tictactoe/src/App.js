@@ -5,12 +5,19 @@ import Cell from './components/cell';
 
 const initState = {
   player: true,
-  board: [
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', ''],
-  ]
+  board: [ '', '', '', '', '', '',  '', '', ''],
 }
+
+const winningArray = [
+  [0,1,2],
+  [3,4,5],
+  [6,7,8],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8],
+  [0,4,8],
+  [2,4,6],
+]
 
 class App extends Component {
 
@@ -21,13 +28,15 @@ class App extends Component {
 
     // console.log("board.length", Object.keys(board).length);
 
-    for(let i=0; i < Object.keys(board).length ; i++){
-      let row = [];
-      for(let j=0; j< Object.keys(board[i]).length; j++){
-        row.push(<Cell key={j} value={board[i][j]} handleClick={this.handleClick} i={i} j={j} player={this.state.player}/>);
-      }
-      table.push(<tr key={i}>{row}</tr>);
-    }
+    // for(let i=0; i < Object.keys(board).length ; i++){
+    //   let row = [];
+    //   for(let j=0; j< Object.keys(board[i]).length; j++){
+    //     row.push(<Cell key={j} value={board[i][j]} handleClick={this.handleClick} i={i} j={j} player={this.state.player}/>);
+    //   }
+    //   table.push(<tr key={i}>{row}</tr>);
+    // }
+
+
 
     return table;
   }
@@ -47,15 +56,34 @@ class App extends Component {
  
   }
 
-  checkWinner = ()=>{
-    if(true){
-      alert("Winner is ");
+  handleClickV2 = (position, player, winner) => {
+    // let player1 = this.state.player ;
+    let newBoard = {...this.state.board} ;
+    if(newBoard[position] === '' && winner !==''){
+      newBoard[position] = player ? 'X' : 'O' ;
+
+      player = !player;
+
+      this.setState({player: player, board: newBoard}) ;
     }
+  }
+
+  checkWinner = (board)=>{
+    let winner = '';
+
+    for(let i=0 ; i< winningArray.length ; i++) {
+      const [a, b , c] = winningArray[i];
+      if(board[a]===board[b] && board[a] ===board[c] && board[a]!=='') {
+        winner = board[a];
+      }
+    }
+    
+    return winner;
   }
 
   render() {
     const board = this.state.board ;
-
+    const winner = this.checkWinner(board);
     // console.log("render", board);
 
     return (
@@ -66,10 +94,27 @@ class App extends Component {
         <table>
           <tbody>
             {
-              this.createBoard(board)
+              // this.createBoard(board)
             }
+            <tr>
+              <Cell position='0' value={board[0]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='1' value={board[1]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='2' value={board[2]} handleClick={this.handleClickV2} player={this.state.player}/>
+            </tr>
+            <tr>
+              <Cell position='3' value={board[3]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='4' value={board[4]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='5' value={board[5]} handleClick={this.handleClickV2} player={this.state.player}/>
+            </tr>
+            <tr>
+              <Cell position='6' value={board[6]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='7' value={board[7]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='8' value={board[8]} handleClick={this.handleClickV2} player={this.state.player}/>
+            </tr>
           </tbody>
         </table>
+
+        <div>Winner is {winner}</div>
         
       </div>
     );
