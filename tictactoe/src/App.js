@@ -6,6 +6,7 @@ import Cell from './components/cell';
 const initState = {
   player: true,
   board: [ '', '', '', '', '', '',  '', '', ''],
+  winner: null,
 }
 
 const winningArray = [
@@ -56,21 +57,26 @@ class App extends Component {
  
   }
 
-  handleClickV2 = (position, player, winner) => {
-    // let player1 = this.state.player ;
+  handleClickV2 = (position) => {
+    let player = this.state.player ;
+    let winner = this.state.winner ;
     let newBoard = {...this.state.board} ;
-    if(newBoard[position] === '' && winner !==''){
+    if(newBoard[position] === '' && winner === null){
       newBoard[position] = player ? 'X' : 'O' ;
 
       player = !player;
+      
 
-      this.setState({player: player, board: newBoard}) ;
+      this.setState({player: player, board: newBoard}, ()=>{
+        winner = this.checkWinner();
+        this.setState({winner: winner});
+      }) ;
     }
   }
 
-  checkWinner = (board)=>{
-    let winner = '';
-
+  checkWinner = ()=>{
+    let winner = null;
+    const board = this.state.board;
     for(let i=0 ; i< winningArray.length ; i++) {
       const [a, b , c] = winningArray[i];
       if(board[a]===board[b] && board[a] ===board[c] && board[a]!=='') {
@@ -83,7 +89,8 @@ class App extends Component {
 
   render() {
     const board = this.state.board ;
-    const winner = this.checkWinner(board);
+    const winner = this.state.winner ;
+    // const winner = this.checkWinner();
     // console.log("render", board);
 
     return (
@@ -91,11 +98,9 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Tic-Tac-Toe Game</h1>
         </header>
-        <table>
+        <h4>Next player is {this.state.player ? 'X' : 'O'}</h4>
+        <table className="game-board">
           <tbody>
-            {
-              // this.createBoard(board)
-            }
             <tr>
               <Cell position='0' value={board[0]} handleClick={this.handleClickV2} player={this.state.player}/>
               <Cell position='1' value={board[1]} handleClick={this.handleClickV2} player={this.state.player}/>

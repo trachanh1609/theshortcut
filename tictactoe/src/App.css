@@ -33,3 +33,7 @@ table td {
   height: 30px;
   border: 1px solid black;
 }
+
+.game-board{
+  margin: 0 auto;
+}
