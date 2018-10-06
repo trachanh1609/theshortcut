@@ -24,38 +24,34 @@ class App extends Component {
 
   state={ ...initState}
 
-  createBoard = (board) => {
-    let table = [];
+  // createBoard = (board) => {
+  //   let table = [];
 
-    // console.log("board.length", Object.keys(board).length);
+  //   console.log("board.length", Object.keys(board).length);
 
-    // for(let i=0; i < Object.keys(board).length ; i++){
-    //   let row = [];
-    //   for(let j=0; j< Object.keys(board[i]).length; j++){
-    //     row.push(<Cell key={j} value={board[i][j]} handleClick={this.handleClick} i={i} j={j} player={this.state.player}/>);
-    //   }
-    //   table.push(<tr key={i}>{row}</tr>);
-    // }
+  //   for(let i=0; i < Object.keys(board).length ; i++){
+  //     let row = [];
+  //     for(let j=0; j< Object.keys(board[i]).length; j++){
+  //       row.push(<Cell key={j} value={board[i][j]} handleClick={this.handleClick} i={i} j={j} player={this.state.player}/>);
+  //     }
+  //     table.push(<tr key={i}>{row}</tr>);
+  //   }
 
+  //   return table;
+  // }
 
+  // handleClick = (row, column, player) => {
+  //   let newBoard = {...this.state.board} ;
+  //   if(newBoard[row][column] === ''){
+  //     newBoard[row][column] = player ? 'X' : 'O' ;
+  //     player = !player ;
 
-    return table;
-  }
-
-  handleClick = (row, column, player) => {
-    let newBoard = {...this.state.board} ;
-    if(newBoard[row][column] === ''){
-      newBoard[row][column] = player ? 'X' : 'O' ;
-      player = !player ;
-
-      this.setState({player: player, board: newBoard}, ()=>{
-        // console.log(this.state.board);
+  //     this.setState({player: player, board: newBoard}, ()=>{
+  //       // console.log(this.state.board);
         
-      });
-    }
-    
- 
-  }
+  //     });
+  //   }
+  // }
 
   handleClickV2 = (position) => {
     let player = this.state.player ;
@@ -87,18 +83,22 @@ class App extends Component {
     return winner;
   }
 
+  resetGame = ()=> {
+    this.setState({...initState});
+  }
+
   render() {
     const board = this.state.board ;
     const winner = this.state.winner ;
-    // const winner = this.checkWinner();
-    // console.log("render", board);
+
 
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Tic-Tac-Toe Game</h1>
         </header>
-        <h4>Next player is {this.state.player ? 'X' : 'O'}</h4>
+        { winner===null && <h4>Next player is {this.state.player ? 'X' : 'O'}</h4>  }
+        { winner!==null && <h4>Game is over</h4>}
         <table className="game-board">
           <tbody>
             <tr>
@@ -120,7 +120,7 @@ class App extends Component {
         </table>
 
         <div>Winner is {winner}</div>
-        
+        <button onClick={this.resetGame}>New Game</button>
       </div>
     );
   }
