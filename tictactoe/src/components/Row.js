@@ -1,5 +1,5 @@
 import React from 'react';
-import Cell from './cell';
+import Cell from './Cell';
 
 const Row = (props) => {
     const {row, rowIndex, handleClick} = props ;
