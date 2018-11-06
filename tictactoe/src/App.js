@@ -53,12 +53,10 @@ class App extends Component {
   }
 
   resetGame = ()=> {
-    this.setState({...initState});
+    this.setState({...initState, player: this.state.player});
   }
 
   render() {
-    // const board = this.state.board ;
-    // const winner = this.state.winner ;
     const {board, winner } = this.state ;
 
     return (
@@ -91,9 +89,9 @@ class App extends Component {
                 return ( 
                   <tr>
                     {
-                      row.map((cell, cellIndex)=> {
+                      row.map((cellValue, cellIndex)=> {
                         const position = rowIndex * 3 + cellIndex;
-                        return <Cell position={position} value={board[position]} handleClick={this.handleClick}></Cell>
+                        return <Cell position={position} value={cellValue} handleClick={this.handleClick}></Cell>
                       })
                     }
                   </tr>
