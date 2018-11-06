@@ -24,36 +24,8 @@ class App extends Component {
 
   state={ ...initState}
 
-  // createBoard = (board) => {
-  //   let table = [];
 
-  //   console.log("board.length", Object.keys(board).length);
-
-  //   for(let i=0; i < Object.keys(board).length ; i++){
-  //     let row = [];
-  //     for(let j=0; j< Object.keys(board[i]).length; j++){
-  //       row.push(<Cell key={j} value={board[i][j]} handleClick={this.handleClick} i={i} j={j} player={this.state.player}/>);
-  //     }
-  //     table.push(<tr key={i}>{row}</tr>);
-  //   }
-
-  //   return table;
-  // }
-
-  // handleClick = (row, column, player) => {
-  //   let newBoard = {...this.state.board} ;
-  //   if(newBoard[row][column] === ''){
-  //     newBoard[row][column] = player ? 'X' : 'O' ;
-  //     player = !player ;
-
-  //     this.setState({player: player, board: newBoard}, ()=>{
-  //       // console.log(this.state.board);
-        
-  //     });
-  //   }
-  // }
-
-  handleClickV2 = (position) => {
+  handleClick = (position) => {
     const {player, winner, board } = this.state ;
 
     let newBoard = [...board];
@@ -99,19 +71,19 @@ class App extends Component {
         <table className="game-board">
           <tbody>
             <tr>
-              <Cell position='0' value={board[0]} handleClick={this.handleClickV2} player={this.state.player}/>
-              <Cell position='1' value={board[1]} handleClick={this.handleClickV2} player={this.state.player}/>
-              <Cell position='2' value={board[2]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='0' value={board[0]} handleClick={this.handleClick}/>
+              <Cell position='1' value={board[1]} handleClick={this.handleClick}/>
+              <Cell position='2' value={board[2]} handleClick={this.handleClick}/>
             </tr>
             <tr>
-              <Cell position='3' value={board[3]} handleClick={this.handleClickV2} player={this.state.player}/>
-              <Cell position='4' value={board[4]} handleClick={this.handleClickV2} player={this.state.player}/>
-              <Cell position='5' value={board[5]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='3' value={board[3]} handleClick={this.handleClick}/>
+              <Cell position='4' value={board[4]} handleClick={this.handleClick}/>
+              <Cell position='5' value={board[5]} handleClick={this.handleClick}/>
             </tr>
             <tr>
-              <Cell position='6' value={board[6]} handleClick={this.handleClickV2} player={this.state.player}/>
-              <Cell position='7' value={board[7]} handleClick={this.handleClickV2} player={this.state.player}/>
-              <Cell position='8' value={board[8]} handleClick={this.handleClickV2} player={this.state.player}/>
+              <Cell position='6' value={board[6]} handleClick={this.handleClick}/>
+              <Cell position='7' value={board[7]} handleClick={this.handleClick}/>
+              <Cell position='8' value={board[8]} handleClick={this.handleClick}/>
             </tr>
           </tbody>
         </table>
