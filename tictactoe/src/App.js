@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-
+import _ from 'lodash';
 import Cell from './components/cell';
 
 const initState = {
@@ -57,9 +57,9 @@ class App extends Component {
   }
 
   render() {
-    const board = this.state.board ;
-    const winner = this.state.winner ;
-
+    // const board = this.state.board ;
+    // const winner = this.state.winner ;
+    const {board, winner } = this.state ;
 
     return (
       <div className="App">
@@ -70,7 +70,7 @@ class App extends Component {
         { winner!==null && <h4>Game is over</h4>}
         <table className="game-board">
           <tbody>
-            <tr>
+            {/* <tr>
               <Cell position='0' value={board[0]} handleClick={this.handleClick}/>
               <Cell position='1' value={board[1]} handleClick={this.handleClick}/>
               <Cell position='2' value={board[2]} handleClick={this.handleClick}/>
@@ -84,7 +84,22 @@ class App extends Component {
               <Cell position='6' value={board[6]} handleClick={this.handleClick}/>
               <Cell position='7' value={board[7]} handleClick={this.handleClick}/>
               <Cell position='8' value={board[8]} handleClick={this.handleClick}/>
-            </tr>
+            </tr> */}
+
+            {
+              _.chunk(board, 3).map( (row, rowIndex) => {
+                return ( 
+                  <tr>
+                    {
+                      row.map((cell, cellIndex)=> {
+                        const position = rowIndex * 3 + cellIndex;
+                        return <Cell position={position} value={board[position]} handleClick={this.handleClick}></Cell>
+                      })
+                    }
+                  </tr>
+                )
+              })
+            }
           </tbody>
         </table>
 
