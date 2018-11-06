@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import _ from 'lodash';
-import Cell from './components/cell';
+// import Cell from './components/cell';
+import Row from './components/Row';
 
 const initState = {
   player: true,
@@ -58,6 +59,7 @@ class App extends Component {
 
   render() {
     const {board, winner } = this.state ;
+    const noOfRows = 3;
 
     return (
       <div className="App">
@@ -68,35 +70,11 @@ class App extends Component {
         { winner!==null && <h4>Game is over</h4>}
         <table className="game-board">
           <tbody>
-            {/* <tr>
-              <Cell position='0' value={board[0]} handleClick={this.handleClick}/>
-              <Cell position='1' value={board[1]} handleClick={this.handleClick}/>
-              <Cell position='2' value={board[2]} handleClick={this.handleClick}/>
-            </tr>
-            <tr>
-              <Cell position='3' value={board[3]} handleClick={this.handleClick}/>
-              <Cell position='4' value={board[4]} handleClick={this.handleClick}/>
-              <Cell position='5' value={board[5]} handleClick={this.handleClick}/>
-            </tr>
-            <tr>
-              <Cell position='6' value={board[6]} handleClick={this.handleClick}/>
-              <Cell position='7' value={board[7]} handleClick={this.handleClick}/>
-              <Cell position='8' value={board[8]} handleClick={this.handleClick}/>
-            </tr> */}
-
             {
-              _.chunk(board, 3).map( (row, rowIndex) => {
-                return ( 
-                  <tr>
-                    {
-                      row.map((cellValue, cellIndex)=> {
-                        const position = rowIndex * 3 + cellIndex;
-                        return <Cell position={position} value={cellValue} handleClick={this.handleClick}></Cell>
-                      })
-                    }
-                  </tr>
-                )
-              })
+              _.chunk(board, noOfRows)
+              .map( (row, rowIndex) => 
+                <Row row={row} rowIndex={rowIndex} handleClick={this.handleClick} /> 
+              )
             }
           </tbody>
         </table>
